@@ -6,16 +6,16 @@ A Link-Storage is a tool for colleting interesting URLs to articles, videos and 
 
 ### Collecting data
 
-- [ ] Store data in flat human-readable Markdown file
+- [x] Store data in flat human-readable Markdown file
 - [ ] Retrieve `title` from page if possible
-- [ ] Store tags provided by user for the entry
-- [ ] Expose CLI interface for adding link with tags
+- [x] Store tags provided by user for the entry
+- [x] Expose CLI interface for adding link with tags
 - [ ] Expose API interface for adding link with tags
 - [ ] Detect duplicates and add `@refreshed` tag to existing entry, merge other tags
 
 ### Retrieving data
 
-- [ ] Load data from human-readable Markdown file
+- [/] Load data from human-readable Markdown file
 - [ ] Expose collected links through API with filtering options (tags)
 - [ ] Expose collected links through simple website with filtering options
 - [ ] Generate simple HTML page with collected links

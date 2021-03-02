@@ -7,8 +7,9 @@ program.version('0.0.1');
 program
     .command('add <url>')
     .description('Add given url to database')
-    .action((url) => {
-        DB.add(prepareLink(url));
+    .option('-t, --tags <tag...>', 'specify tags')
+    .action((url, option) => {
+        DB.add(prepareLink(url, option.tags || []));
     });
 
 program

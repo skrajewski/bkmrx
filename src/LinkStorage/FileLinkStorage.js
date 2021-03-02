@@ -1,26 +1,5 @@
 const fs = require('fs');
-const format = require('date-fns/format');
-const parse = require('date-fns/parse');
-const { prepareLink } = require('./Link');
-
-const inlineTags = tags => tags.map(t => `@${t}`).join(' ');
-const formatDate = date => format(date, 'yyyy-MM-dd HH:mm');
-
-const toMarkdownLine = link => `- ${formatDate(link.createdAt)} # ${link.url} # ` + inlineTags(link.tags);
-
-const cleanUpDate = datePart => datePart.replace('- ', '').trim();
-
-const parseDate = dateString => parse(dateString, 'yyyy-MM-dd HH:mm', new Date());
-
-const cleanAndParseDate = datePart => parseDate(cleanUpDate(datePart));
-
-const fromMarkdownLine = line => {
-    const parts = line.split('#');
-    const data = cleanAndParseDate(parts[0]);
-    const tags = parts[2].match(/\@([A-Za-z0-9\-]+)/g) || [];
-
-    return prepareLink(parts[1].trim(), tags, data)
-};
+const { fromMarkdown, toMarkdown } = require('./LinkBetweenMarkdown');
 
 class FileLinkStorage {
     constructor(filename) {
@@ -28,7 +7,7 @@ class FileLinkStorage {
     }
 
     add(link) {
-        const line = toMarkdownLine(link) + '\n';
+        const line = toMarkdown(link) + '\n';
         
         fs.appendFile(this.db, line, (err) => {
             if (err) {
@@ -50,11 +29,12 @@ class FileLinkStorage {
                     return;
                 }
 
-                data = data.trim().split('\n');
+                data = data
+                    .trim()
+                    .split('\n')
+                    .map(fromMarkdown);
 
-                const links = data.map(fromMarkdownLine);
-
-                resolve(links);
+                resolve(data);
             });
         });
     }
