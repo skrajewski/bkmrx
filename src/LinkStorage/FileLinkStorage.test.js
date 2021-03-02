@@ -1,38 +1,76 @@
 const FileLinkStorage = require('./FileLinkStorage');
 const { prepareLink } = require('./Link');
 const fs = require('fs');
-
-
-jest.mock('fs');
+const mock = require('mock-fs');
 
 describe('add new markdown formatted line to db file', () => {
-    it('should add entry without tags', () => {
+    jest.spyOn(fs, 'appendFile').mockImplementation(() => {});
+
+    afterAll(() => jest.clearAllMocks());
+
+    it('should add entry without tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
         storage.add(prepareLink('http://test.com', [], new Date('2021-02-10T15:00:00Z')));
     
-        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # ", expect.anything());
+        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # \n", expect.anything());
     });
 
-    it('should add entry with tags', () => {
+    it('should add entry with tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
         storage.add(prepareLink('http://test.com', ['dev', 'js'], new Date('2021-02-10T15:00:00Z')));
         
-        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # @dev @js", expect.anything());
+        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # @dev @js\n", expect.anything());
     });
 });
 
 describe('get all entries from file', () => {
+    afterEach(() => mock.restore());
+
     it('should return empty array if there are no entries in db file', () => {
 
-        let mockedData = "- 2021-03-01 12:22 # https://czasgentlemanow.pl/2021/02/robic-mniej/ # ";
-        fs.readFile = jest.fn().mockImplementation((file, mode, cb) => cb(null,  mockedData));
+        mock({'test.md': ''});
 
         const storage = new FileLinkStorage('test.md');
 
-        storage.getAll().then(data => {
-            expect(data).toBe([]);
+        return storage.getAll().then(data => {
+            expect(data).toStrictEqual([]);
+        });
+    });
+
+    it('should return array with processed links from the db file', () => {
+        mock({'test.md': '- 2021-02-10 15:00 # http://test.com # \n'});
+
+        const storage = new FileLinkStorage('test.md');
+
+        return storage.getAll().then(data => {
+            expect(data).toStrictEqual([{
+                createdAt: new Date('2021-02-10T15:00:00Z'),
+                url: 'http://test.com',
+                tags: []
+            }]);
+        });
+    });
+
+    it('should return array with processed links from the db file with tags', () => {
+        mock({'test.md': '- 2021-02-10 15:00 # http://test.com # @dev @js\n- 2021-02-10 15:15 # http://example.com # @dev @php @learn\n'});
+
+        const storage = new FileLinkStorage('test.md');
+
+        return storage.getAll().then(data => {
+            expect(data).toStrictEqual([
+                {
+                    createdAt: new Date('2021-02-10T15:00:00Z'),
+                    url: 'http://test.com',
+                    tags: ['dev', 'js'] 
+                },
+                {
+                    createdAt: new Date('2021-02-10T15:15:00Z'),
+                    url: 'http://example.com',
+                    tags: ['dev', 'php', 'learn']
+                }
+            ])
         });
     });
 });

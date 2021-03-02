@@ -17,8 +17,9 @@ const cleanAndParseDate = datePart => parseDate(cleanUpDate(datePart));
 const fromMarkdownLine = line => {
     const parts = line.split('#');
     const data = cleanAndParseDate(parts[0]);
+    const tags = parts[2].match(/\@([A-Za-z0-9\-]+)/g) || [];
 
-    return prepareLink(parts[1].trim(), [], data)
+    return prepareLink(parts[1].trim(), tags, data)
 };
 
 class FileLinkStorage {
@@ -27,12 +28,12 @@ class FileLinkStorage {
     }
 
     add(link) {
-        fs.appendFile(this.db, toMarkdownLine(link), (err) => {
+        const line = toMarkdownLine(link) + '\n';
+        
+        fs.appendFile(this.db, line, (err) => {
             if (err) {
                 throw err;
             }
-
-            console.log("Link stored in DB")
         })
     }
 
@@ -41,10 +42,12 @@ class FileLinkStorage {
             fs.readFile(this.db, 'utf-8', function (err, data) {
                 if (err) {
                     reject(err);
+                    return;
                 }
 
-                if (!data) {
-                    data = "";
+                if (data.length === 0) {
+                    resolve([]);
+                    return;
                 }
 
                 data = data.trim().split('\n');
