@@ -2,9 +2,11 @@ const fs = require('fs');
 const format = require('date-fns/format');
 const parse = require('date-fns/parse');
 const { prepareLink } = require('./Link');
-const { gb } = require('date-fns/locale');
 
-const toMarkdownLine = link => `- ${format(link.createdAt, 'yyyy-MM-dd HH:mm', {locale: gb})} # ${link.url} # ` + link.tags.map(t => `@${t}`).join(' ');
+const inlineTags = tags => tags.map(t => `@${t}`).join(' ');
+const formatDate = date => format(date, 'yyyy-MM-dd HH:mm');
+
+const toMarkdownLine = link => `- ${formatDate(link.createdAt)} # ${link.url} # ` + inlineTags(link.tags);
 
 const cleanUpDate = datePart => datePart.replace('- ', '').trim();
 
@@ -39,6 +41,10 @@ class FileLinkStorage {
             fs.readFile(this.db, 'utf-8', function (err, data) {
                 if (err) {
                     reject(err);
+                }
+
+                if (!data) {
+                    data = "";
                 }
 
                 data = data.trim().split('\n');

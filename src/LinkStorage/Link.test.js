@@ -17,13 +17,27 @@ test('it should return object with current date when url is valid', () => {
     dateSpy.mockRestore();
 });
 
-test('it should normalize tags by removing whitespace characters', () => {
+test('it should normalize tags by replacing spaces with hyphens', () => {
     const mockedDate = new Date('2021-02-10T15:00:00Z');
     const dateSpy = jest.spyOn(global, 'Date').mockImplementation(() => mockedDate);
 
-    expect(prepareLink('https://example.com/', ['dev', 'js', 'invalid tag', 'here#I@am'])).toStrictEqual({
+    expect(prepareLink('https://example.com/', ['dev', 'js', 'invalid tag'])).toStrictEqual({
         url: 'https://example.com/',
-        tags: ['dev', 'js', 'invalid-tag', 'hereIam'],
+        tags: ['dev', 'js', 'invalid-tag'],
+        createdAt: new Date('2021-02-10T15:00:00.000Z')
+    });
+
+    dateSpy.mockRestore();
+});
+
+
+test('it should normalize tags by removing special characters', () => {
+    const mockedDate = new Date('2021-02-10T15:00:00Z');
+    const dateSpy = jest.spyOn(global, 'Date').mockImplementation(() => mockedDate);
+
+    expect(prepareLink('https://example.com/', ['dev', 'js', 'here#I@am'])).toStrictEqual({
+        url: 'https://example.com/',
+        tags: ['dev', 'js', 'hereIam'],
         createdAt: new Date('2021-02-10T15:00:00.000Z')
     });
 
