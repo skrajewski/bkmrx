@@ -1,8 +1,6 @@
 const express = require('express');
-const { InMemoryLinkStorage } = require('./src/LinkStorage');
 const router = express.Router();
-
-const storage = new InMemoryLinkStorage();
+const { DB } = require('./storage');
 
 router.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
@@ -15,12 +13,13 @@ router.get('/', function (req, res) {
 });
 
 router.get('/store', function (req, res) {
-    storage.add(req.query.url);
+    // DB.add(req.query.url);
     res.sendStatus(201);
 });
 
-router.get('/list', function (req, res) {
-    const list = [...storage.getAll()];
+router.get('/list', async function (req, res) {
+    
+    const list = await DB.getAll();
 
     res.json(list);
 });
