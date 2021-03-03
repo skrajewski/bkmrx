@@ -7,7 +7,7 @@ A Link-Storage is a tool for colleting interesting URLs to articles, videos and 
 ### Collecting data
 
 - [x] Store data in flat human-readable Markdown file
-- [ ] Retrieve `title` from page if possible
+- [x] Retrieve `title` from page if possible
 - [x] Store tags provided by user for the entry
 - [x] Expose CLI interface for adding link with tags
 - [ ] Expose API interface for adding link with tags
@@ -34,3 +34,4 @@ A Link-Storage is a tool for colleting interesting URLs to articles, videos and 
 - [ ] Could work as a daemon or standalone app
 - [ ] Configurable through external configuration file
 - [ ] Covered by tests
+- [/] Offline mode
