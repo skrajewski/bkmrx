@@ -55,11 +55,12 @@ const cleanAndParseDate = compose(parseDate, cleanupDate);
  * @returns {Line}
  */
 const fromMarkdown = line => {
-    const parts = line.split('#');
+    const parts = line.split(' #');
     const data = cleanAndParseDate(parts[0]);
     const tags = parts[2].match(/\@([A-Za-z0-9\-]+)/g) || [];
+    const title = parts[2].split('@')[0].trim();
 
-    return prepareLink(parts[1].trim(), tags, data)
+    return prepareLink(parts[1].trim(), title, tags, data)
 };
 
 /**
@@ -68,7 +69,7 @@ const fromMarkdown = line => {
  * @param {Link} link 
  * @returns {string}
  */
-const toMarkdown = link => `- ${formatDate(link.createdAt)} # ${link.url} # ` + inlineTags(link.tags);
+const toMarkdown = link => ['-', formatDate(link.createdAt), '#', link.url, '#', link.title, inlineTags(link.tags)].filter(t => t).join(' ');
 
 module.exports = {
     fromMarkdown,

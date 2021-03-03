@@ -11,17 +11,17 @@ describe('add new markdown formatted line to db file', () => {
     it('should add entry without tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
-        storage.add(prepareLink('http://test.com', [], new Date('2021-02-10T15:00:00Z')));
+        storage.add(prepareLink('http://test.com', 'Test Page', [], new Date('2021-02-10T15:00:00Z')));
     
-        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # \n", expect.anything());
+        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # Test Page\n", expect.anything());
     });
 
     it('should add entry with tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
-        storage.add(prepareLink('http://test.com', ['dev', 'js'], new Date('2021-02-10T15:00:00Z')));
+        storage.add(prepareLink('http://test.com', 'Test Page', ['dev', 'js'], new Date('2021-02-10T15:00:00Z')));
         
-        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # @dev @js\n", expect.anything());
+        expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # Test Page @dev @js\n", expect.anything());
     });
 });
 
@@ -47,6 +47,7 @@ describe('get all entries from file', () => {
         return storage.getAll().then(data => {
             expect(data).toStrictEqual([{
                 createdAt: new Date('2021-02-10T15:00:00Z'),
+                title: '',
                 url: 'http://test.com',
                 tags: []
             }]);
@@ -63,12 +64,14 @@ describe('get all entries from file', () => {
                 {
                     createdAt: new Date('2021-02-10T15:00:00Z'),
                     url: 'http://test.com',
-                    tags: ['dev', 'js'] 
+                    tags: ['dev', 'js'],
+                    title: ''
                 },
                 {
                     createdAt: new Date('2021-02-10T15:15:00Z'),
                     url: 'http://example.com',
-                    tags: ['dev', 'php', 'learn']
+                    tags: ['dev', 'php', 'learn'],
+                    title: ''
                 }
             ])
         });
