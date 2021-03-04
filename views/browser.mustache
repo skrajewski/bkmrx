@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>bkmrx browser</title>
+  <link rel="stylesheet" href="css/reset.css?v=1.0">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color: #333;
+      border-top: 15px solid #333;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1em;
+    }
+
+    article.entry {
+      margin: 0.5em 0;
+      padding: 0.5em 0.5em;
+      border: 1px solid #333;
+      border-left: 5px solid #333;
+      background-color: #f3f3f3;
+     }
+
+    article.entry h3 {
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+
+    article.entry .date {
+      color: #333;
+      opacity: 0.5;
+      font-size: 0.75em;
+    }
+
+    article.entry a.url {
+      /* display: block; */
+      color: #333;
+      font-size: 0.75em;
+      padding-top: 0.2em;
+    }
+
+    article.entry:hover {
+      border-color: #333;
+      background-color: #333;
+      color: #fff;
+    }
+
+    article.entry:hover a.url {
+      color: #fff;
+    }
+
+    article.entry:hover .date {
+      color: #fff;
+    }
+
+    article.entry .tags {
+      float: right;
+    }
+
+    article.entry .tag {
+      font-size: 0.75em;
+      font-style: italic;
+    }
+
+    article.entry .tag:not(:last-child)::after {
+      content: ','
+    }
+  </style>
+
+</head>
+
+<body>
+  <main>
+  {{#links}}
+    <article class="entry">
+      <span class="date">{{ date }}</span>
+      <h3>{{ title }}</h3>
+      <span class="tags">
+        {{#tags}}
+          <span class="tag">{{.}}</span>
+        {{/tags}}
+      </span>
+      <a href="{{ url }}" class="url">{{ url }}</a>
+    </article>
+  {{/links}}
+  </main>
+</body>
+</html>

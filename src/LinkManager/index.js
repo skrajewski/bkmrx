@@ -1,5 +1,3 @@
 const LinkManager = require('./LinkManager');
 
-module.exports = {
-    LinkManager
-};
+module.exports = LinkManager;

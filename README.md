@@ -15,9 +15,9 @@ A Link-Storage is a tool for colleting interesting URLs to articles, videos and 
 
 ### Retrieving data
 
-- [/] Load data from human-readable Markdown file
+- [x] Load data from human-readable Markdown file
 - [ ] Expose collected links through API with filtering options (tags)
-- [ ] Expose collected links through simple website with filtering options
+- [/] Expose collected links through simple website with filtering options
 - [ ] Generate simple HTML page with collected links
 - [ ] Expose interface for Alfred integration (with filtering, JSON powered)
 

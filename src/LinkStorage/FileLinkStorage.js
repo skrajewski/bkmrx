@@ -32,7 +32,8 @@ class FileLinkStorage {
                 data = data
                     .trim()
                     .split('\n')
-                    .map(fromMarkdown);
+                    .map(fromMarkdown)
+                    .sort((a, b) => b.createdAt - a.createdAt);
 
                 resolve(data);
             });

@@ -62,15 +62,15 @@ describe('get all entries from file', () => {
         return storage.getAll().then(data => {
             expect(data).toStrictEqual([
                 {
-                    createdAt: new Date('2021-02-10T15:00:00Z'),
-                    url: 'http://test.com',
-                    tags: ['dev', 'js'],
-                    title: ''
-                },
-                {
                     createdAt: new Date('2021-02-10T15:15:00Z'),
                     url: 'http://example.com',
                     tags: ['dev', 'php', 'learn'],
+                    title: ''
+                },
+                {
+                    createdAt: new Date('2021-02-10T15:00:00Z'),
+                    url: 'http://test.com',
+                    tags: ['dev', 'js'],
                     title: ''
                 }
             ])
