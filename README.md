@@ -82,6 +82,8 @@ This syntax and set of rules is a tradeoff between text easy to read by humans a
 - Add more API endpoints to manage and browse data
 - Expose an optional interface for Alfred integration (or use API)
 - More configuration options: offline mode, toggle API/UI – probably by the external configuration file
+- Detect errors in DB file and notify user, but allow parse as many entries as possible
+- Support YAML Front Matter
 
 ## License
 

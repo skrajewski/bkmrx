@@ -9,6 +9,17 @@ const { prepareLink } = require('./Link');
 const compose = (f, g) => arg => f(g(arg));
 
 /**
+ * Try use function f against arg, and fallback to g if check(f) is false
+ * 
+ * @param {function} f 
+ * @param {function} g 
+ */
+const useFallbackIf = (f, g, check) => arg => {
+    const res = f(arg);
+    return check(res) ? res : g(arg);
+};
+
+/**
  * Parse array of tags to inline representation
  * 
  * @param {string[]} tags
@@ -41,12 +52,20 @@ const cleanupDate = datePart => datePart.replace('- ', '').trim();
 const parseDate = dateString => parse(dateString, 'yyyy-MM-dd HH:mm', new Date());
 
 /**
+ * Parse date string without time part.
+ * 
+ * @param {string} dateString Date from Markdown line
+ * @param {Date} dateString 
+ */
+const parseDateFallback = dateString => parse(dateString, 'yyyy-MM-dd', new Date());
+
+/**
  * Clean and parse date from Markdown file
  * 
  * @param {string} datePart 
  * @returns {string}
  */
-const cleanAndParseDate = compose(parseDate, cleanupDate);
+const cleanAndParseDate = compose(useFallbackIf(parseDate, parseDateFallback, d => d instanceof Date && isFinite(d)), cleanupDate);
 
 /**
  * Parse link from Markdown file to Link object

@@ -23,7 +23,7 @@ router.get('/', async function (req, res) {
 
     links = links.map(link => ({...link, date: renderDate, parsedTitle}));
 
-    res.render('browser', { title: 'Hey', links})
+    res.render('browser', {links});
 });
 
 module.exports = router;

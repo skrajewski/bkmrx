@@ -1,7 +1,7 @@
 {
   "name": "bkmrx",
   "version": "0.1.0",
-  "description": "Browser and manage your bookmarks stored in human-readable Markdown file",
+  "description": "Browse and manage your bookmarks stored in human-readable Markdown file",
   "main": "src/cli.js",
   "scripts": {
     "test": "TZ=utc jest",

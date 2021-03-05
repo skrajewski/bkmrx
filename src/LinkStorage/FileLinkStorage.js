@@ -17,6 +17,15 @@ class FileLinkStorage {
     }
 
     getAll() {
+        const fromMarkdownButIgnoreInvalidLines = function (line) {
+            try {
+                return fromMarkdown(line);
+            } catch (e) {
+                console.error(`This line is not a valid entry: ${line}.`);
+                return '';
+            }
+        };
+
         return new Promise((resolve, reject) => {
             fs.readFile(this.db, 'utf-8', function (err, data) {
                 if (err) {
@@ -32,7 +41,8 @@ class FileLinkStorage {
                 data = data
                     .trim()
                     .split('\n')
-                    .map(fromMarkdown)
+                    .map(fromMarkdownButIgnoreInvalidLines)
+                    .filter(n => n)
                     .sort((a, b) => b.createdAt - a.createdAt);
 
                 resolve(data);
