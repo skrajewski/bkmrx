@@ -6,6 +6,16 @@
   <link rel="stylesheet" href="css/reset.css?v=1.0">
 
   <style>
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+
+    em {
+      font-style: italic;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       color: #333;
@@ -18,56 +28,57 @@
       padding: 1em;
     }
 
-    article.entry {
-      margin: 0.5em 0;
-      padding: 0.5em 0.5em;
-      border: 1px solid #333;
-      border-left: 5px solid #333;
-      background-color: #f3f3f3;
+    .entry {
+      margin: 0.2em 0;
+      padding: 0.2em 0.5em;
+      position: relative;
+      display: block;
+      width: 100%;
+      color: #333;
+      text-decoration: none;
      }
 
-    article.entry h3 {
+    .entry h3 {
       margin-bottom: 5px;
       display: inline-block;
     }
 
-    article.entry .date {
-      color: #333;
-      opacity: 0.5;
+    .entry .date {
+      color: #999;
       font-size: 0.75em;
+      font-family: monospace;
+      padding-right: 0.5em;
     }
 
-    article.entry a.url {
+    .entry .url {
       /* display: block; */
-      color: #333;
+      color: #999;
       font-size: 0.75em;
       padding-top: 0.2em;
     }
 
-    article.entry:hover {
-      border-color: #333;
-      background-color: #333;
-      color: #fff;
+    .entry:hover {
+      color: blue;
+    }
+    
+    .entry:hover::after {
+      border-bottom: 1px dashed #999;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
     }
 
-    article.entry:hover a.url {
-      color: #fff;
-    }
-
-    article.entry:hover .date {
-      color: #fff;
-    }
-
-    article.entry .tags {
+    .entry .tags {
       float: right;
     }
 
-    article.entry .tag {
+    .entry .tag {
       font-size: 0.75em;
       font-style: italic;
     }
 
-    article.entry .tag:not(:last-child)::after {
+    .entry .tag:not(:last-child)::after {
       content: ','
     }
   </style>
@@ -77,16 +88,16 @@
 <body>
   <main>
   {{#links}}
-    <article class="entry">
+    <a class="entry" href="{{ url }}">
       <span class="date">{{ date }}</span>
-      <h3>{{ title }}</h3>
+      <h3>{{{ parsedTitle }}}</h3>
       <span class="tags">
         {{#tags}}
           <span class="tag">{{.}}</span>
         {{/tags}}
       </span>
-      <a href="{{ url }}" class="url">{{ url }}</a>
-    </article>
+      <span class="url">{{ url }}</span>
+    </a>
   {{/links}}
   </main>
 </body>

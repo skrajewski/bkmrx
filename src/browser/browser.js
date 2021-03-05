@@ -17,7 +17,11 @@ router.get('/', async function (req, res) {
         return format(this.createdAt, "yyyyMMdd");
     };
 
-    links = links.map(link => ({...link, date: renderDate}));
+    const parsedTitle = function () {
+        return this.title || "<em>Missing title</em>";
+    };
+
+    links = links.map(link => ({...link, date: renderDate, parsedTitle}));
 
     res.render('browser', { title: 'Hey', links})
 });
