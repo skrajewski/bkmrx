@@ -4,6 +4,7 @@
   "description": "Browse and manage your bookmarks stored in human-readable Markdown file",
   "main": "src/cli.js",
   "bin": "bin/bkmrx",
+  "repository": "skrajewski/bkmrx",
   "scripts": {
     "test": "TZ=utc jest",
     "start": "node src/server.js"
