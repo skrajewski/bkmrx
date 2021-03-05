@@ -1,7 +1,7 @@
 function getDefaultDatabaseFile() {
     const homedir = require('os').homedir();
     const path = require('path');
-    const filename = 'urlx.md';
+    const filename = 'bkmrx.md';
 
     return path.join(homedir, filename);
 }
