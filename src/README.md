@@ -1,4 +1,4 @@
-# Link Storage
+# Link Storage aka bkmrx
 
 A Link-Storage is a tool for colleting interesting URLs to articles, videos and other network resources. The purpose of this app is to store a reference to other resources in a human-readable file such as Markdown or txt file.
 

@@ -12,8 +12,8 @@ async function addLink(url, title, tags) {
             console.error(`Unable to retrieve title for url: ${url}. Processing without description.`);
         }
     }
-
-    // duplicate detection
+    
+    // todo: duplicate detection
 
     DB.add(prepareLink(url, title, tags));
 }

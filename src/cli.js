@@ -16,6 +16,12 @@ program
         manager.addLink(url, option.desc, option.tags);
     });
 
+
+program.command('serve')
+    .description('Serve API and web UI')
+    .action(() => {
+        require('./server')();
+    });
 program
     .command('all')
     .description('Print all colected urls')

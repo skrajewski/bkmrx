@@ -39,6 +39,24 @@ class FileLinkStorage {
             });
         });
     }
+
+    exists(url) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(this.db, 'utf-8', function (err, data) {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                if (data.length === 0) {
+                    resolve([]);
+                    return;
+                }
+
+                resolve(data.trim().split('\n').some(e => fromMarkdown(e).link === url));
+            });
+        });
+    }
 }
 
 module.exports = FileLinkStorage;
