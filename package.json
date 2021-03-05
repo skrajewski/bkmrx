@@ -1,6 +1,6 @@
 {
   "name": "bkmrx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Browse and manage your bookmarks stored in human-readable Markdown file",
   "main": "src/cli.js",
   "bin": "bin/bkmrx",
