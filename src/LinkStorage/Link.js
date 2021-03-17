@@ -8,7 +8,7 @@ function prepareLink(url, title = '', tags = [], createdAt = null) {
     }
 
     return {
-        url: url,
+        url,
         title,
         tags: tags.map(sanitizeTag),
         createdAt: createdAt || new Date()

@@ -15,7 +15,7 @@ async function addLink(url, title, tags) {
     
     // todo: duplicate detection
 
-    DB.add(prepareLink(url, title, tags));
+    return DB.add(prepareLink(url, title, tags));
 }
 
 

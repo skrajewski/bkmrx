@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { DB } = require('../storage');
+const bodyParser = require('body-parser');
+const { response } = require('.');
+
+const jsonParser = bodyParser.json();
 
 router.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
@@ -16,6 +20,17 @@ router.get('/link', async function (req, res) {
     const list = await DB.getAll();
 
     res.json(list);
+});
+
+router.post('/link', jsonParser, async function (req, res) {
+    const { addLink } = require('./../LinkManager');
+    const {title, tags, url} = req.body;
+
+    await addLink(url, title, tags);
+
+    console.log(`New entry added thourgh API: ${url}`);
+
+    res.status(204);
 });
 
 module.exports = router;

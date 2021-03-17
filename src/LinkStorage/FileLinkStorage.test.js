@@ -11,7 +11,11 @@ describe('add new markdown formatted line to db file', () => {
     it('should add entry without tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
-        storage.add(prepareLink('http://test.com', 'Test Page', [], new Date('2021-02-10T15:00:00Z')));
+        /** 
+         * add is asynchronous, however, the implementation 
+         * that resolve Promise is mocked 
+         **/
+        /* await */ storage.add(prepareLink('http://test.com', 'Test Page', [], new Date('2021-02-10T15:00:00Z')));
     
         expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # Test Page\n", expect.anything());
     });
@@ -19,7 +23,7 @@ describe('add new markdown formatted line to db file', () => {
     it('should add entry with tags', async () => {
         const storage = new FileLinkStorage('test.md');
 
-        storage.add(prepareLink('http://test.com', 'Test Page', ['dev', 'js'], new Date('2021-02-10T15:00:00Z')));
+        /* await */ storage.add(prepareLink('http://test.com', 'Test Page', ['dev', 'js'], new Date('2021-02-10T15:00:00Z')));
         
         expect(fs.appendFile).toHaveBeenCalledWith('test.md', "- 2021-02-10 15:00 # http://test.com # Test Page @dev @js\n", expect.anything());
     });

@@ -8,12 +8,17 @@ class FileLinkStorage {
 
     add(link) {
         const line = toMarkdown(link) + '\n';
-        
-        fs.appendFile(this.db, line, (err) => {
-            if (err) {
-                throw err;
-            }
-        })
+
+        return new Promise((resolve, reject) => {
+            fs.appendFile(this.db, line, (err) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve();
+            });
+    
+        });
     }
 
     getAll() {

@@ -6,7 +6,7 @@ const { prepareLink } = require('./Link');
  * compose :: (a -> a) -> (a -> a) -> (a -> a)
  * todo: is it a valid signature?
  */
-const compose = (f, g) => arg => f(g(arg));
+const compose = (f, g) => (arg) => f(g(arg));
 
 /**
  * Try use function f against arg, and fallback to g if check(f) is false
@@ -14,7 +14,7 @@ const compose = (f, g) => arg => f(g(arg));
  * @param {function} f 
  * @param {function} g 
  */
-const useFallbackIf = (f, g, check) => arg => {
+const useFallbackIf = (f, g, check) => (arg) => {
     const res = f(arg);
     return check(res) ? res : g(arg);
 };
@@ -25,7 +25,7 @@ const useFallbackIf = (f, g, check) => arg => {
  * @param {string[]} tags
  * @returns {string}
  */
-const inlineTags = tags => tags.map(t => `@${t}`).join(' ');
+const inlineTags = tags => tags.map((t) => `@${t}`).join(' ');
 
 /**
  * Format date object to its Markdown representation
@@ -57,7 +57,7 @@ const parseDate = dateString => parse(dateString, 'yyyy-MM-dd HH:mm', new Date()
  * @param {string} dateString Date from Markdown line
  * @param {Date} dateString 
  */
-const parseDateFallback = dateString => parse(dateString, 'yyyy-MM-dd', new Date());
+const parseDateFallback = (dateString) => parse(dateString, 'yyyy-MM-dd', new Date());
 
 /**
  * Clean and parse date from Markdown file
@@ -65,7 +65,7 @@ const parseDateFallback = dateString => parse(dateString, 'yyyy-MM-dd', new Date
  * @param {string} datePart 
  * @returns {string}
  */
-const cleanAndParseDate = compose(useFallbackIf(parseDate, parseDateFallback, d => d instanceof Date && isFinite(d)), cleanupDate);
+const cleanAndParseDate = compose(useFallbackIf(parseDate, parseDateFallback, (d) => d instanceof Date && isFinite(d)), cleanupDate);
 
 /**
  * Parse link from Markdown file to Link object
@@ -73,7 +73,7 @@ const cleanAndParseDate = compose(useFallbackIf(parseDate, parseDateFallback, d 
  * @param {string} line single entry from Markdown file
  * @returns {Line}
  */
-const fromMarkdown = line => {
+const fromMarkdown = (line) => {
     const parts = line.split(' #');
     const data = cleanAndParseDate(parts[0]);
     const tags = parts[2].match(/\@([A-Za-z0-9\-]+)/g) || [];
@@ -88,7 +88,7 @@ const fromMarkdown = line => {
  * @param {Link} link 
  * @returns {string}
  */
-const toMarkdown = link => ['-', formatDate(link.createdAt), '#', link.url, '#', link.title, inlineTags(link.tags)].filter(t => t).join(' ');
+const toMarkdown = (link) => ['-', formatDate(link.createdAt), '#', link.url, '#', link.title, inlineTags(link.tags)].filter((t) => t).join(' ');
 
 module.exports = {
     fromMarkdown,
