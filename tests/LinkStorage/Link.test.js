@@ -1,4 +1,4 @@
-const { prepareLink } = require('./Link');
+const { prepareLink } = require('../../src/LinkStorage/Link');
 
 test('it should throw error when url is not valid', () => {
     expect(() => prepareLink('htxs:/cffd dsf', [])).toThrowError('Link "htxs:/cffd dsf" is not a valid URL.');

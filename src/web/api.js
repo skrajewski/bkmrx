@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { DB } = require('../storage');
 const bodyParser = require('body-parser');
-const { response } = require('.');
 
 const jsonParser = bodyParser.json();
 
@@ -32,5 +31,6 @@ router.post('/link', jsonParser, async function (req, res) {
 
     res.status(204);
 });
+
 
 module.exports = router;

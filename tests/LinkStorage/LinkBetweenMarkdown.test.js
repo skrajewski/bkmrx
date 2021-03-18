@@ -1,4 +1,4 @@
-const { fromMarkdown, toMarkdown } = require("./LinkBetweenMarkdown");
+const { fromMarkdown, toMarkdown } = require("../../src/LinkStorage/LinkBetweenMarkdown");
 
 describe('Parse Link object to Markdown representation', () => {
     test('it should parse link to valid markdown entry with title and tags', () => {

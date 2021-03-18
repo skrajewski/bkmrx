@@ -1,7 +1,7 @@
 const { fetchTitle } = require('./../TitleFetcher');
 const { DB } = require('./../storage');
 const { prepareLink } = require('../LinkStorage/Link');
-const settings = require('../settings');
+const settings = require('./../settings');
 
 async function addLink(url, title, tags) {
     // support offline mode
@@ -17,7 +17,6 @@ async function addLink(url, title, tags) {
 
     return DB.add(prepareLink(url, title, tags));
 }
-
 
 module.exports = {
     addLink

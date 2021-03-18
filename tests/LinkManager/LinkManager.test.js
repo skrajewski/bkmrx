@@ -1,11 +1,11 @@
-const LinkManager = require('./LinkManager');
-const { DB } = require('../storage');
-const { fetchTitle } = require('../TitleFetcher');
-const { isOfflineMode} = require('./../settings');
+const LinkManager = require('../../src/LinkManager/LinkManager');
+const { DB } = require('../../src/storage');
+const { fetchTitle } = require('../../src/TitleFetcher');
+const { isOfflineMode } = require('../../src/settings');
 
-jest.mock('../storage');
-jest.mock('../TitleFetcher');
-jest.mock('../settings');
+jest.mock('./../../src/storage');
+jest.mock('./../../src/TitleFetcher');
+jest.mock('./../../src/settings');
 
 describe('Add new entry to database', () => {
     let dateSpy;

@@ -1,5 +1,5 @@
-const FileLinkStorage = require('./FileLinkStorage');
-const { prepareLink } = require('./Link');
+const FileLinkStorage = require('../../src/LinkStorage/FileLinkStorage');
+const { prepareLink } = require('../../src/LinkStorage/Link');
 const fs = require('fs');
 const mock = require('mock-fs');
 

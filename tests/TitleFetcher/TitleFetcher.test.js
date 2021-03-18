@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { Response } = jest.requireActual('node-fetch');
-const { fetchTitle } = require('./TitleFetcher');
+const { fetchTitle } = require('../../src/TitleFetcher/TitleFetcher');
 
 jest.mock('node-fetch');
 
