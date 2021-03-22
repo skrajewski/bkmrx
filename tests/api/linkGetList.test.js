@@ -19,7 +19,11 @@ const app = require('../../src/web');
 
 afterAll(async () => {
     jest.clearAllMocks();
-    await unlink(tempDb);
+    try {
+        await unlink(tempDb);
+    } catch (e) {
+        // no need to take action
+    }
 });
 
 describe('test the get endpoint to retrieve list of links', () => {
@@ -27,7 +31,7 @@ describe('test the get endpoint to retrieve list of links', () => {
         await writeFile(tempDb, '');
 
         const res = await request(app)
-            .get('/api/link')
+            .get('/api/links')
             .send(); 
 
         expect(res.statusCode).toEqual(200);
@@ -35,10 +39,10 @@ describe('test the get endpoint to retrieve list of links', () => {
     });
 
     it('should respond with links from db', async () => {
-        await writeFile(tempDb, '- 2021-02-12 12:00 # https://example.com # Example site @example @blog\n- 2021-02-12 15:00 # https://test.com # @test');
+        await writeFile(tempDb, '- 2021-02-12 12:00 # https://example.com # Example site @example @blog\n- 2021-02-12 15:00 # https://test.com # @test\n');
     
         const res = await request(app)
-            .get('/api/link')
+            .get('/api/links')
             .send();
     
         expect(res.statusCode).toEqual(200);

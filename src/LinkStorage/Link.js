@@ -16,5 +16,6 @@ function prepareLink(url, title = '', tags = [], createdAt = null) {
 }
 
 module.exports = {
-    prepareLink
+    prepareLink,
+    sanitizeTag
 };
