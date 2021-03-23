@@ -1,9 +1,10 @@
 const express = require('express');
-const api = require('./api');
-const browser = require('./browser');
-const app = express();
 const mustacheExpress = require('mustache-express');
 const path = require('path');
+const api = require('./api');
+const browser = require('./browser');
+
+const app = express();
 
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
