@@ -1,9 +1,10 @@
 const express = require('express');
-
-const router = express.Router();
 const { checkSchema, validationResult } = require('express-validator');
 const { DB } = require('../storage');
 const { addLink } = require('../LinkManager');
+const oapi = require('./openapi');
+
+const router = express.Router();
 
 router.use(express.json());
 
@@ -17,14 +18,65 @@ router.get('/', (req, res) => {
   res.json({ status: 'OK' });
 });
 
-router.get('/links', async (req, res) => {
-  const list = await DB.getAll();
-
-  res.json(list);
-});
+router.get(
+  '/links',
+  oapi.path({
+    summary: 'Get links',
+    description: 'Get list of links',
+    responses: {
+      200: {
+        description: 'Successful',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: oapi.component('schemas', 'Link'),
+            },
+          },
+        },
+      },
+    },
+  }),
+  async (req, res) => {
+    res.json(await DB.getAll());
+  },
+);
 
 router.post(
   '/links',
+  oapi.path({
+    summary: 'Add link',
+    description: 'Add new link to the database',
+    requestBody: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: oapi.component('schemas', 'Link'),
+        },
+      },
+    },
+    responses: {
+      204: {
+        description: 'Successful',
+      },
+      400: {
+        description: 'Validation error',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                errors: {
+                  type: 'array',
+                  items: oapi.component('schemas', 'Error'),
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  }),
   checkSchema({
     url: {
       in: ['body'],

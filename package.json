@@ -8,11 +8,13 @@
   "scripts": {
     "test": "TZ=utc jest",
     "start": "node src/cli.js serve",
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
+    "lint": "eslint tests src --ext=js",
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "Szymon Krajewski",
   "license": "MIT",
   "dependencies": {
+    "@wesleytodd/openapi": "^0.1.0",
     "commander": "^7.1.0",
     "date-fns": "^2.17.0",
     "express": "^4.17.1",
@@ -27,6 +29,7 @@
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
     "jest": "^26.6.3",
     "supertest": "^6.1.3"
   }
