@@ -158,7 +158,7 @@ Some people don't use bookmarks. Some people bookmark everything obsessively. We
 
 By using Markdown, I wanted to keep the list of my bookmarks small enough to browse and search through the list. Using *bkmrx*, I can easily store and browse thousands of links, but it's not what this tool was built for. However, maybe someone finds value in it.
 
-If you find a remedy on the always-full _read-later_ list, that's not the right direction. Try to establish a healthy relationship with the _read-later_ lists first. Without a proper mindset, neither *bkmrx* nor other tools could help you process all this stuff. You can read [more about it on my blog][https://szymonkrajewski.pl/dont-read-later/].
+If you find a remedy on the always-full _read-later_ list, that's not the right direction. Try to establish a healthy relationship with the _read-later_ lists first. Without a proper mindset, neither *bkmrx* nor other tools could help you process all this stuff. You can read [more about it on my blog](https://szymonkrajewski.pl/dont-read-later/).
 ## License
 
 *bkmrx* is open-sourced software licensed under the [MIT license](LICENSE.txt).
