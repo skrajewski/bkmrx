@@ -1,14 +1,14 @@
 {
   "name": "bkmrx",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Browse and manage your bookmarks stored in human-readable Markdown file",
   "main": "src/cli.js",
   "bin": "bin/bkmrx",
   "repository": "skrajewski/bkmrx",
   "scripts": {
-    "test": "TZ=utc jest",
+    "test": "TZ=utc ./node_modules/.bin/jest",
     "start": "node src/cli.js serve",
-    "lint": "eslint tests src --ext=js",
+    "lint": "./node_modules/.bin/eslint tests src --ext=js",
     "lint:fix": "npm run lint -- --fix"
   },
   "author": "Szymon Krajewski",
